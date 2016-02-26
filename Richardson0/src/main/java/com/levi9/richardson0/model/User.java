@@ -1,4 +1,4 @@
-package com.levi9.richardson0.dto;
+package com.levi9.richardson0.model;
 
 import java.util.List;
 
