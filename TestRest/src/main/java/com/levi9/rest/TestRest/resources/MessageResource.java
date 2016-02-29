@@ -2,6 +2,7 @@ package com.levi9.rest.TestRest.resources;
 
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -13,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.levi9.rest.TestRest.model.Message;
+import com.levi9.rest.TestRest.resources.beans.MessageFilterBean;
 import com.levi9.rest.TestRest.service.MessageService;
 
 @Path("/messages")
@@ -23,7 +25,13 @@ public class MessageResource {
 	private MessageService service = new MessageService();
 
 	@GET
-	public List<Message> getMessages() {
+	public List<Message> getMessages(@BeanParam MessageFilterBean filter) {
+		if (filter.getYear() > 0) {
+			return service.getAllMessagesForYear(filter.getYear());
+		}
+		if (filter.getStart() >= 0 && filter.getSize() >= 0) {
+			return service.getAllMessagesPaginated(filter.getStart(), filter.getSize());
+		}
 		return service.getAllMessages();
 	}
 

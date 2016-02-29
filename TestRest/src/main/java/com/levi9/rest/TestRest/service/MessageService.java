@@ -1,6 +1,7 @@
 package com.levi9.rest.TestRest.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +15,32 @@ public class MessageService {
 	public MessageService() {
 		messages.put(1L, new Message(1, "1st", "mihai"));
 		messages.put(2L, new Message(2, "2nd", "mihai"));
+		messages.put(3L, new Message(3, "1st", "albert"));
+		messages.put(4L, new Message(4, "2nd", "albert"));
 	}
 
 	public List<Message> getAllMessages() {
 		return new ArrayList<>(messages.values());
+	}
+
+	public List<Message> getAllMessagesForYear(int year) {
+		List<Message> filteredMsgs = new ArrayList<>();
+		Calendar cal = Calendar.getInstance();
+		for (Message msg : messages.values()) {
+			cal.setTime(msg.getCreationDate());
+			if (cal.get(Calendar.YEAR) == year) {
+				filteredMsgs.add(msg);
+			}
+		}
+		return filteredMsgs;
+	}
+
+	public List<Message> getAllMessagesPaginated(int start, int size) {
+		List<Message> filteredMsgs = new ArrayList<>(messages.values());
+		if (start > messages.size() || start + size > messages.size()) {
+			return null;
+		}
+		return filteredMsgs.subList(start, start + size);
 	}
 
 	public Message getMessage(long id) {
