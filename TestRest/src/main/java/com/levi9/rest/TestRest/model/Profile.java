@@ -10,10 +10,9 @@ public class Profile {
 	private String profileName;
 	private String firstName;
 	private String lastName;
-	private Date creationDate;
+	private Date creationDate = new Date();
 
 	public Profile() {
-		creationDate = new Date();
 	}
 
 	public Profile(long id, String profileName, String firstName, String lastName) {
@@ -22,7 +21,6 @@ public class Profile {
 		this.profileName = profileName;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		creationDate = new Date();
 	}
 
 	public long getId() {

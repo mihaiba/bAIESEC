@@ -6,17 +6,24 @@ import java.util.List;
 import java.util.Map;
 
 import com.levi9.rest.TestRest.memoryDB.Database;
+import com.levi9.rest.TestRest.model.Comment;
 import com.levi9.rest.TestRest.model.Message;
 
 public class MessageService {
 
-	private static Map<Long, Message> messages = Database.getMessages();
+	private Map<Long, Message> messages = Database.getMessages();
 
 	public MessageService() {
 		messages.put(1L, new Message(1, "1st", "mihai"));
 		messages.put(2L, new Message(2, "2nd", "mihai"));
 		messages.put(3L, new Message(3, "1st", "albert"));
 		messages.put(4L, new Message(4, "2nd", "albert"));
+
+		for (Message msg : messages.values()) {
+			for (long commentId = 0; commentId < 10; commentId++) {
+				msg.getComments().put(commentId, new Comment(commentId, msg.getId(), "Hello World!"));
+			}
+		}
 	}
 
 	public List<Message> getAllMessages() {
@@ -36,11 +43,9 @@ public class MessageService {
 	}
 
 	public List<Message> getAllMessagesPaginated(int start, int size) {
-		List<Message> filteredMsgs = new ArrayList<>(messages.values());
-		if (start > messages.size() || start + size > messages.size()) {
-			return null;
-		}
-		return filteredMsgs.subList(start, start + size);
+		List<Message> list = new ArrayList<Message>(messages.values());
+		if (start + size > list.size()) return new ArrayList<Message>();
+		return list.subList(start, start + size); 
 	}
 
 	public Message getMessage(long id) {

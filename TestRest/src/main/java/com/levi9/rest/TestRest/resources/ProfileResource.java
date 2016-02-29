@@ -20,7 +20,7 @@ import com.levi9.rest.TestRest.service.ProfileService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProfileResource {
 
-	private static ProfileService service = new ProfileService();
+	private ProfileService service = new ProfileService();
 
 	@GET
 	public List<Profile> getProfiles() {
@@ -39,13 +39,13 @@ public class ProfileResource {
 	}
 
 	@PUT
-	@Path("{profileName}")
+	@Path("/{profileName}")
 	public Profile updateProfile(@PathParam("profileName") String profileName, Profile profile) {
 		return service.updateProfile(profile);
 	}
 
 	@DELETE
-	@Path("{profileName}")
+	@Path("/{profileName}")
 	public Profile removeProfile(@PathParam("profileName") String profileName) {
 		return service.removeProfile(profileName);
 	}

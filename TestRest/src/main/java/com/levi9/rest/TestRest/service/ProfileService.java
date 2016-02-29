@@ -8,7 +8,7 @@ import com.levi9.rest.TestRest.memoryDB.Database;
 import com.levi9.rest.TestRest.model.Profile;
 
 public class ProfileService {
-	private static Map<String, Profile> profiles = Database.getProfile();
+	private Map<String, Profile> profiles = Database.getProfiles();
 
 	public ProfileService() {
 		profiles.put("mihai", new Profile(1, "mihai", "mihai", "balaniscu"));
