@@ -1,4 +1,6 @@
-<jsp:useBean id="contact" class="com.levi9.baisec.web.controllers.Contact"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="contact" scope="request" type="com.levi9.baisec.web.controllers.Contact"/>
+
 <html>
 <head>
   <title>View Contact</title>
@@ -6,7 +8,7 @@
 <body>
 <h1>View Contact</h1>
 
-<h2>${contact.name}</h2>
+<h2><c:out value="${contact.name}"/></h2>
 
 <p>Phone Number: ${contact.phone}</p>
 
