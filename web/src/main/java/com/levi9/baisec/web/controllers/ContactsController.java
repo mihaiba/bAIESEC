@@ -4,9 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -73,17 +71,21 @@ public class ContactsController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String displayEditContact() {
+    public String displayEditContact(@RequestParam Integer contactId, Model model) {
         logger.debug("In displayEditContact");
+
+        model.addAttribute("contact", contacts.get(contactId));
 
         return "edit";
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String doEditContact() {
+    public String doEditContact(@RequestParam Integer contactId, @ModelAttribute Contact contact) {
         logger.debug("In doEditContact");
 
-        return "redirect:/contacts/view?contactId=4";
+        contacts.put(contactId, contact);
+
+        return "redirect:/contacts/view?contactId=" + contactId;
     }
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
@@ -96,8 +98,10 @@ public class ContactsController {
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String doDeleteContact() {
+    public String doDeleteContact(@RequestParam Integer contactId) {
         logger.debug("In doDeleteContact");
+
+        contacts.remove(contactId);
 
         return "redirect:/contacts/list";
     }

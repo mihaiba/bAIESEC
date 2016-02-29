@@ -21,7 +21,7 @@
     <tr>
       <td>${contact.value.name}</td>
       <td>${contact.value.phone}</td>
-      <td><a href="<c:url value="/contacts/view?contactId=${contact.key}"/>">View</a> <a href="<c:url value="/contacts/edit?contactId=${contact.key}"/>">Edit</a> <form style="display: inline"><input type="hidden" name="contactId" value="${contact.key}"/><input type="submit" value="Delete"/></form> </td>
+      <td><a href="<c:url value="/contacts/view?contactId=${contact.key}"/>">View</a> <a href="<c:url value="/contacts/edit?contactId=${contact.key}"/>">Edit</a> <form  action="<c:url value="/contacts/delete?contactId=${contact.key}"/>" method="POST" style="display: inline"><input type="submit" value="Delete"/></form> </td>
     </tr>
   </c:forEach>
 
