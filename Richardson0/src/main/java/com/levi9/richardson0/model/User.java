@@ -2,6 +2,9 @@ package com.levi9.richardson0.model;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class User {
 	private int id;
 	private String name;
