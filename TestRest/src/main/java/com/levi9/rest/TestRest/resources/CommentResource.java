@@ -20,7 +20,7 @@ import com.levi9.rest.TestRest.service.CommentService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class CommentResource {
 
-	private CommentService service = new CommentService();
+	private static CommentService service = new CommentService();
 
 	@GET
 	public List<Comment> getAllComments(@PathParam("messageId") long messageId) {

@@ -1,8 +1,8 @@
 package com.levi9.rest.TestRest.model;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -13,9 +13,9 @@ public class Message {
 	private String message;
 	private Date creationDate = new Date();
 	private String author;
-	private Map<Long, Comment> comments = new HashMap<>();
-	private Map<Long, Like> likes = new HashMap<>();
-	private Map<Long, Share> shares = new HashMap<>();
+	private Map<Long, Comment> comments = new ConcurrentHashMap<>();
+	private Map<Long, Like> likes = new ConcurrentHashMap<>();
+	private Map<Long, Share> shares = new ConcurrentHashMap<>();
 
 	public Message() {
 	}

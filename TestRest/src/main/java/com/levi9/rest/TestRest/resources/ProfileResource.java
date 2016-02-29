@@ -20,7 +20,7 @@ import com.levi9.rest.TestRest.service.ProfileService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProfileResource {
 
-	private ProfileService service = new ProfileService();
+	private static ProfileService service = new ProfileService();
 
 	@GET
 	public List<Profile> getProfiles() {

@@ -22,7 +22,7 @@ import com.levi9.rest.TestRest.service.MessageService;
 @Consumes(MediaType.APPLICATION_JSON)
 public class MessageResource {
 
-	private MessageService service = new MessageService();
+	private static MessageService service = new MessageService();
 
 	@GET
 	public List<Message> getMessages(@BeanParam MessageFilterBean filter) {
