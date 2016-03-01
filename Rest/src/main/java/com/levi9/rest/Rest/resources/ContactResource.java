@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -22,7 +24,7 @@ public class ContactResource {
 
 	private static ContactService service = new ContactService();
 
-	// UD
+	// D
 
 	@POST
 	public Contact createContact(@PathParam("userName") String userName, Contact contact) {
@@ -43,8 +45,22 @@ public class ContactResource {
 	}
 
 	@GET
-	@Path("/{contactId}")
-	public Contact getContact(@PathParam("userName") String userName, @PathParam("contactId") int contactId) {
-		return service.getContact(userName, contactId);
+	@Path("/{phoneNumber}")
+	public Contact getContact(@PathParam("userName") String userName, @PathParam("phoneNumber") String phoneNumber) {
+		return service.getContact(userName, phoneNumber);
+	}
+
+	@PUT
+	@Path("/{phoneNumber}")
+	public Contact updateContact(@PathParam("userName") String userName, @PathParam("phoneNumber") String phoneNumber,
+			Contact contact) {
+		contact.setPhoneNumber(phoneNumber);
+		return service.updateContact(userName, contact);
+	}
+
+	@DELETE
+	@Path("/{phoneNumber}")
+	public Contact deleteContact(@PathParam("userName") String userName, @PathParam("phoneNumber") String phoneNumber) {
+		return service.removeContact(userName, phoneNumber);
 	}
 }

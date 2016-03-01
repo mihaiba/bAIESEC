@@ -16,9 +16,9 @@ public class ContactService {
 		if (!users.get(userName).isAuthenticated()) {
 			return null;
 		}
-		Map<String, Contact> contacts = users.get(userName).getContacts();
-		contact.setId(contacts.size() + 1);
-		contacts.put(contact.getPhoneNumber(), contact);
+		Map<String, Contact> contactMap = users.get(userName).getContacts();
+		contact.setId(contactMap.size() + 1);
+		contactMap.put(contact.getPhoneNumber(), contact);
 		return contact;
 	}
 
@@ -26,20 +26,15 @@ public class ContactService {
 		return new ArrayList<>(users.get(userName).getContacts().values());
 	}
 
-	public Contact getContact(String userName, int contactId) {
-		Map<String, Contact> contacts = users.get(userName).getContacts();
-		for (Contact contact : contacts.values()) {
-			if (contactId == contact.getId()) {
-				return contact;
-			}
-		}
-		return null;
+	public Contact getContact(String userName, String phoneNumber) {
+		Map<String, Contact> contactMap = users.get(userName).getContacts();
+		return contactMap.get(phoneNumber);
 	}
 
 	public List<Contact> getContactsByName(String userName, String name) {
-		Map<String, Contact> contacts = users.get(userName).getContacts();
+		Map<String, Contact> contactMap = users.get(userName).getContacts();
 		List<Contact> filteredContacts = new ArrayList<>();
-		for (Contact contact : contacts.values()) {
+		for (Contact contact : contactMap.values()) {
 			if (contact.getFirstName().toUpperCase().contains(name.toUpperCase())
 					|| contact.getLastName().toUpperCase().contains(name.toUpperCase())) {
 				filteredContacts.add(contact);
@@ -49,13 +44,28 @@ public class ContactService {
 	}
 
 	public List<Contact> getContactsByPhoneNumber(String userName, String phoneNumber) {
-		Map<String, Contact> contacts = users.get(userName).getContacts();
+		Map<String, Contact> contactMap = users.get(userName).getContacts();
 		List<Contact> filteredContacts = new ArrayList<>();
-		for (Map.Entry<String, Contact> contact : contacts.entrySet()) {
+		for (Map.Entry<String, Contact> contact : contactMap.entrySet()) {
 			if (contact.getKey().contains(phoneNumber)) {
 				filteredContacts.add(contact.getValue());
 			}
 		}
 		return filteredContacts;
+	}
+
+	public Contact updateContact(String userName, Contact contact) {
+		Map<String, Contact> contactMap = users.get(userName).getContacts();
+		if (!contactMap.containsKey(contact.getPhoneNumber())) {
+			return null;
+		}
+		contact.setId(contactMap.get(contact.getPhoneNumber()).getId());
+		contactMap.put(contact.getPhoneNumber(), contact);
+		return contact;
+	}
+
+	public Contact removeContact(String userName, String phoneNumber) {
+		Map<String, Contact> contactMap = users.get(userName).getContacts();
+		return contactMap.remove(phoneNumber);
 	}
 }
