@@ -1,7 +1,8 @@
 package com.levi9.rest.Rest.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -11,8 +12,9 @@ public class User {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private List<Contact> contacts = new ArrayList<>();
-	private List<Event> events = new ArrayList<>();
+	private Map<String, Contact> contacts = new ConcurrentHashMap<>();
+	private Map<Date, Event> events = new ConcurrentHashMap<>();
+	private boolean isAuthenticated = false;
 
 	public User() {
 
@@ -67,20 +69,28 @@ public class User {
 	}
 
 	@XmlTransient
-	public List<Contact> getContacts() {
+	public Map<String, Contact> getContacts() {
 		return contacts;
 	}
 
-	public void setContacts(List<Contact> contacts) {
+	public void setContacts(Map<String, Contact> contacts) {
 		this.contacts = contacts;
 	}
 
 	@XmlTransient
-	public List<Event> getEvents() {
+	public Map<Date, Event> getEvents() {
 		return events;
 	}
 
-	public void setEvents(List<Event> events) {
+	public void setEvents(Map<Date, Event> events) {
 		this.events = events;
+	}
+
+	public boolean isAuthenticated() {
+		return isAuthenticated;
+	}
+
+	public void setAuthenticated(boolean isAuthenticated) {
+		this.isAuthenticated = isAuthenticated;
 	}
 }
