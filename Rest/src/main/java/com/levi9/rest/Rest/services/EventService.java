@@ -1,6 +1,9 @@
 package com.levi9.rest.Rest.services;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.levi9.rest.Rest.memoryDB.Database;
@@ -16,6 +19,40 @@ public class EventService {
 		event.setId(events.size() + 1);
 		events.put(event.getEventDate(), event);
 		return event;
+	}
+
+	public List<Event> getEvents(String userName) {
+		Map<Date, Event> events = users.get(userName).getEvents();
+		return new ArrayList<>(events.values());
+	}
+
+	public Event updateEvent(String userName, Event event) {
+		Map<Date, Event> events = users.get(userName).getEvents();
+		Iterator<Event> iterator = events.values().iterator();
+		while (iterator.hasNext()) {
+			Event currentEvent = iterator.next();
+			if (currentEvent.getId() == event.getId()) {
+				if (!event.getEventDate().equals(currentEvent.getEventDate())) {
+					iterator.remove();
+				}
+				events.put(event.getEventDate(), event);
+			}
+		}
+		return event;
+	}
+
+	public Event removeEvent(String userName, int eventId) {
+		Map<Date, Event> events = users.get(userName).getEvents();
+		Iterator<Event> iterator = events.values().iterator();
+		Event currentEvent = null;
+		while (iterator.hasNext()) {
+			currentEvent = iterator.next();
+			if (currentEvent.getId() == eventId) {
+				iterator.remove();
+				break;
+			}
+		}
+		return currentEvent;
 	}
 
 }
