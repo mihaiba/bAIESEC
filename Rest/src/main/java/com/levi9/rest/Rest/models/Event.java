@@ -3,6 +3,8 @@ package com.levi9.rest.Rest.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 public class Event {
 	private int id;
 	private List<Contact> contacts;
@@ -16,6 +18,7 @@ public class Event {
 		this.id = id;
 	}
 
+	@XmlTransient
 	public List<Contact> getContacts() {
 		return contacts;
 	}

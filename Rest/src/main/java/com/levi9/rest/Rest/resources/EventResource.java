@@ -1,10 +1,13 @@
 package com.levi9.rest.Rest.resources;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.levi9.rest.Rest.models.Event;
 import com.levi9.rest.Rest.services.EventService;
 
 /**
@@ -16,4 +19,9 @@ import com.levi9.rest.Rest.services.EventService;
 public class EventResource {
 	private static EventService service = new EventService();
 
+	// CRUD
+	@POST
+	public Event createEvent(@PathParam("userName") String userName, Event event) {
+		return service.addEvent(userName, event);
+	}
 }

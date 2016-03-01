@@ -24,8 +24,6 @@ public class ContactResource {
 
 	private static ContactService service = new ContactService();
 
-	// D
-
 	@POST
 	public Contact createContact(@PathParam("userName") String userName, Contact contact) {
 		return service.addContact(userName, contact);
