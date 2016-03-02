@@ -1,6 +1,6 @@
 package com.levi9.rest.Rest.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,7 +13,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private Map<String, Contact> contacts = new ConcurrentHashMap<>();
-	private Map<Date, Event> events = new ConcurrentHashMap<>();
+	private Map<LocalDate, Event> events = new ConcurrentHashMap<>();
 	private boolean isAuthenticated = false;
 
 	public User() {
@@ -78,11 +78,11 @@ public class User {
 	}
 
 	@XmlTransient
-	public Map<Date, Event> getEvents() {
+	public Map<LocalDate, Event> getEvents() {
 		return events;
 	}
 
-	public void setEvents(Map<Date, Event> events) {
+	public void setEvents(Map<LocalDate, Event> events) {
 		this.events = events;
 	}
 

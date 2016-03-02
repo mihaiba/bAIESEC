@@ -1,7 +1,7 @@
 package com.levi9.rest.Rest.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,19 +15,19 @@ public class EventService {
 	private static Map<String, User> users = Database.getUsers();
 
 	public Event addEvent(String userName, Event event) {
-		Map<Date, Event> events = users.get(userName).getEvents();
+		Map<LocalDate, Event> events = users.get(userName).getEvents();
 		event.setId(events.size() + 1);
 		events.put(event.getEventDate(), event);
 		return event;
 	}
 
 	public List<Event> getEvents(String userName) {
-		Map<Date, Event> events = users.get(userName).getEvents();
+		Map<LocalDate, Event> events = users.get(userName).getEvents();
 		return new ArrayList<>(events.values());
 	}
 
 	public Event updateEvent(String userName, Event event) {
-		Map<Date, Event> events = users.get(userName).getEvents();
+		Map<LocalDate, Event> events = users.get(userName).getEvents();
 		Iterator<Event> iterator = events.values().iterator();
 		while (iterator.hasNext()) {
 			Event currentEvent = iterator.next();
@@ -42,7 +42,7 @@ public class EventService {
 	}
 
 	public Event removeEvent(String userName, int eventId) {
-		Map<Date, Event> events = users.get(userName).getEvents();
+		Map<LocalDate, Event> events = users.get(userName).getEvents();
 		Iterator<Event> iterator = events.values().iterator();
 		Event currentEvent = null;
 		while (iterator.hasNext()) {

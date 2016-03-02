@@ -1,13 +1,25 @@
 package com.levi9.rest.Rest.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Contact {
 	private int id;
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
-	private Date birthDay;
+	private LocalDate birthDay = LocalDate.MAX;
+
+	public Contact() {
+
+	}
+
+	public Contact(int id, String firstName, String lastName, String phoneNumber, LocalDate birthday) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.birthDay = birthday;
+	}
 
 	public int getId() {
 		return id;
@@ -41,11 +53,11 @@ public class Contact {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Date getBirthDay() {
+	public LocalDate getBirthDay() {
 		return birthDay;
 	}
 
-	public void setBirthDay(Date birthDay) {
+	public void setBirthDay(LocalDate birthDay) {
 		this.birthDay = birthDay;
 	}
 }

@@ -1,14 +1,24 @@
 package com.levi9.rest.Rest.models;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlTransient;
 
 public class Event {
 	private int id;
-	private List<Contact> contacts;
-	private Date eventDate;
+	private LocalDate eventDate = LocalDate.MAX;
+	private List<Contact> contacts = new ArrayList<>();
+
+	public Event() {
+
+	}
+
+	public Event(int id, LocalDate eventDate) {
+		this.id = id;
+		this.eventDate = eventDate;
+	}
 
 	public int getId() {
 		return id;
@@ -27,11 +37,11 @@ public class Event {
 		this.contacts = contacts;
 	}
 
-	public Date getEventDate() {
+	public LocalDate getEventDate() {
 		return eventDate;
 	}
 
-	public void setEventDate(Date eventDate) {
+	public void setEventDate(LocalDate eventDate) {
 		this.eventDate = eventDate;
 	}
 }

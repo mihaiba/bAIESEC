@@ -13,9 +13,6 @@ public class ContactService {
 	private Map<String, User> users = Database.getUsers();
 
 	public Contact addContact(String userName, Contact contact) {
-		if (!users.get(userName).isAuthenticated()) {
-			return null;
-		}
 		Map<String, Contact> contactMap = users.get(userName).getContacts();
 		contact.setId(contactMap.size() + 1);
 		contactMap.put(contact.getPhoneNumber(), contact);
