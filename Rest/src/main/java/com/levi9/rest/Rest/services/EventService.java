@@ -22,8 +22,8 @@ public class EventService {
 		return event;
 	}
 
-	public List<Event> getEvents(EventsFilterBean filter) {
-		Map<LocalDate, Event> events = users.get(filter.getUserName()).getEvents();
+	public List<Event> getEvents(String userName, EventsFilterBean filter) {
+		Map<LocalDate, Event> events = users.get(userName).getEvents();
 		return new ArrayList<>(events.values());
 	}
 

@@ -17,7 +17,7 @@ import com.levi9.rest.Rest.models.Contact;
 import com.levi9.rest.Rest.resources.filterbeans.ContactsFilterBean;
 import com.levi9.rest.Rest.services.ContactService;
 
-@Path("/")
+@Path("/{userName}/contacts")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ContactResource {
@@ -30,8 +30,8 @@ public class ContactResource {
 	}
 
 	@GET
-	public List<Contact> getContacts(@BeanParam ContactsFilterBean filter) {
-		return service.getContacts(filter);
+	public List<Contact> getContacts(@PathParam("userName") String userName, @BeanParam ContactsFilterBean filter) {
+		return service.getContacts(userName, filter);
 	}
 
 	@GET

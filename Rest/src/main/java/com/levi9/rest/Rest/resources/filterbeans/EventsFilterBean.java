@@ -7,8 +7,6 @@ import javax.ws.rs.QueryParam;
 public class EventsFilterBean {
 	@QueryParam("eventDate")
 	private LocalDate eventDate;
-	@QueryParam("userName")
-	private String userName;
 
 	public LocalDate getEventDate() {
 		return eventDate;
@@ -16,13 +14,5 @@ public class EventsFilterBean {
 
 	public void setEventDate(LocalDate eventDate) {
 		this.eventDate = eventDate;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 }

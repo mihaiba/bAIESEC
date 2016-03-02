@@ -20,7 +20,7 @@ import com.levi9.rest.Rest.services.EventService;
 /**
  * Sub resource of User resource.
  */
-@Path("/")
+@Path("/{userName}/events")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class EventResource {
@@ -34,8 +34,8 @@ public class EventResource {
 
 	@GET
 	// TODO: I want to be able to filter results.
-	public List<Event> getEvents(@BeanParam EventsFilterBean filter) {
-		return service.getEvents(filter);
+	public List<Event> getEvents(@PathParam("userName") String userName, @BeanParam EventsFilterBean filter) {
+		return service.getEvents(userName, filter);
 	}
 
 	@PUT

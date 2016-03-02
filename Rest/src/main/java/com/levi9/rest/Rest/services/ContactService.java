@@ -20,12 +20,12 @@ public class ContactService {
 		return contact;
 	}
 
-	public List<Contact> getContacts(ContactsFilterBean filter) {
-		Map<String, Contact> contactMap = users.get(filter.getUserName()).getContacts();
-		if (!filter.getName().isEmpty()) {
+	public List<Contact> getContacts(String userName, ContactsFilterBean filter) {
+		Map<String, Contact> contactMap = users.get(userName).getContacts();
+		if (filter.getName() != null && !filter.getName().isEmpty()) {
 			return getContactsByName(filter.getName(), contactMap);
 		}
-		if (!filter.getPhoneNumber().isEmpty()) {
+		if (filter.getPhoneNumber() != null && !filter.getPhoneNumber().isEmpty()) {
 			return getContactsByPhoneNumber(filter.getPhoneNumber(), contactMap);
 		}
 		return new ArrayList<>(contactMap.values());
