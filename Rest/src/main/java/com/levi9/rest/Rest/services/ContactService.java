@@ -7,6 +7,7 @@ import java.util.Map;
 import com.levi9.rest.Rest.memoryDB.Database;
 import com.levi9.rest.Rest.models.Contact;
 import com.levi9.rest.Rest.models.User;
+import com.levi9.rest.Rest.resources.filterbeans.ContactsFilterBean;
 
 public class ContactService {
 
@@ -19,8 +20,15 @@ public class ContactService {
 		return contact;
 	}
 
-	public List<Contact> getContacts(String userName) {
-		return new ArrayList<>(users.get(userName).getContacts().values());
+	public List<Contact> getContacts(ContactsFilterBean filter) {
+		Map<String, Contact> contactMap = users.get(filter.getUserName()).getContacts();
+		if (!filter.getName().isEmpty()) {
+			return getContactsByName(filter.getName(), contactMap);
+		}
+		if (!filter.getPhoneNumber().isEmpty()) {
+			return getContactsByPhoneNumber(filter.getPhoneNumber(), contactMap);
+		}
+		return new ArrayList<>(contactMap.values());
 	}
 
 	public Contact getContact(String userName, String phoneNumber) {
@@ -28,8 +36,7 @@ public class ContactService {
 		return contactMap.get(phoneNumber);
 	}
 
-	public List<Contact> getContactsByName(String userName, String name) {
-		Map<String, Contact> contactMap = users.get(userName).getContacts();
+	private List<Contact> getContactsByName(String name, Map<String, Contact> contactMap) {
 		List<Contact> filteredContacts = new ArrayList<>();
 		for (Contact contact : contactMap.values()) {
 			if (contact.getFirstName().toUpperCase().contains(name.toUpperCase())
@@ -40,8 +47,7 @@ public class ContactService {
 		return filteredContacts;
 	}
 
-	public List<Contact> getContactsByPhoneNumber(String userName, String phoneNumber) {
-		Map<String, Contact> contactMap = users.get(userName).getContacts();
+	private List<Contact> getContactsByPhoneNumber(String phoneNumber, Map<String, Contact> contactMap) {
 		List<Contact> filteredContacts = new ArrayList<>();
 		for (Map.Entry<String, Contact> contact : contactMap.entrySet()) {
 			if (contact.getKey().contains(phoneNumber)) {

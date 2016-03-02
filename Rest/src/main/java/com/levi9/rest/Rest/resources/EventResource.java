@@ -2,6 +2,7 @@ package com.levi9.rest.Rest.resources;
 
 import java.util.List;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -13,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.levi9.rest.Rest.models.Event;
+import com.levi9.rest.Rest.resources.filterbeans.EventsFilterBean;
 import com.levi9.rest.Rest.services.EventService;
 
 /**
@@ -32,8 +34,8 @@ public class EventResource {
 
 	@GET
 	// TODO: I want to be able to filter results.
-	public List<Event> getEvents(@PathParam("userName") String userName) {
-		return service.getEvents(userName);
+	public List<Event> getEvents(@BeanParam EventsFilterBean filter) {
+		return service.getEvents(filter);
 	}
 
 	@PUT

@@ -9,6 +9,7 @@ import java.util.Map;
 import com.levi9.rest.Rest.memoryDB.Database;
 import com.levi9.rest.Rest.models.Event;
 import com.levi9.rest.Rest.models.User;
+import com.levi9.rest.Rest.resources.filterbeans.EventsFilterBean;
 
 public class EventService {
 
@@ -21,8 +22,8 @@ public class EventService {
 		return event;
 	}
 
-	public List<Event> getEvents(String userName) {
-		Map<LocalDate, Event> events = users.get(userName).getEvents();
+	public List<Event> getEvents(EventsFilterBean filter) {
+		Map<LocalDate, Event> events = users.get(filter.getUserName()).getEvents();
 		return new ArrayList<>(events.values());
 	}
 

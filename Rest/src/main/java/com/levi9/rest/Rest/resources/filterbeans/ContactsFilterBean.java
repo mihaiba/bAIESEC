@@ -7,6 +7,8 @@ public class ContactsFilterBean {
 	private String phoneNumber;
 	@QueryParam("name")
 	private String name;
+	@QueryParam("userName")
+	private String userName;
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -22,6 +24,14 @@ public class ContactsFilterBean {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

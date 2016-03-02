@@ -30,16 +30,8 @@ public class ContactResource {
 	}
 
 	@GET
-	public List<Contact> getContacts(@PathParam("userName") String userName, @BeanParam ContactsFilterBean filter) {
-		if (!filter.getName().isEmpty()) {
-			return service.getContactsByName(userName, filter.getName());
-		}
-
-		if (!filter.getPhoneNumber().isEmpty()) {
-			return service.getContactsByPhoneNumber(userName, filter.getPhoneNumber());
-		}
-
-		return service.getContacts(userName);
+	public List<Contact> getContacts(@BeanParam ContactsFilterBean filter) {
+		return service.getContacts(filter);
 	}
 
 	@GET
