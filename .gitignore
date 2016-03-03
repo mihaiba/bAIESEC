@@ -1,3 +1,6 @@
-web/target
-web/.idea
-web/rest.iml
+/rest/target
+/rest/rest.iml
+/web/target
+/web/web.iml
+/.idea
+/parent.iml
