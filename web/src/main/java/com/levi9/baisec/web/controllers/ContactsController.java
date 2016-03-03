@@ -1,14 +1,21 @@
 package com.levi9.baisec.web.controllers;
 
+import com.levi9.baisec.web.controllers.models.Contact;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * File created by a.chmilevski on 2/24/2016 - 10:37 AM.
@@ -19,26 +26,11 @@ import java.util.Map;
 public class ContactsController {
     private static final Logger logger = LoggerFactory.getLogger(ContactsController.class);
 
-    private static Map<Integer, Contact> contacts = new HashMap<>();
-    private static int maxId = 1;
+    @Autowired
+    RestTemplate restTemplate;
 
-    public ContactsController(){
-        Contact c = new Contact();
-        c.setName("Albert Chmilevski");
-        c.setPhone("0756929431");
-        c.setAddress("Clopotari 25");
-        c.setDateOfBirth("14/02/1993");
-        contacts.put(maxId, c);
-        maxId++;
-
-        c = new Contact();
-        c.setName("Alex Ioan");
-        c.setPhone("075695555");
-        c.setAddress("Targu Cucu");
-        c.setDateOfBirth("01/01/1950");
-        contacts.put(maxId, c);
-        maxId++;
-    }
+    @Value("${rest.url}")
+    String restUrl;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index() {
@@ -51,6 +43,8 @@ public class ContactsController {
     public String displayContactList(Model model) {
         logger.debug("In displayContactList");
 
+        ResponseEntity<Contact[]> responseEntity = restTemplate.getForEntity(restUrl + "/users/a.chmilevski/contacts", Contact[].class);
+        List<Contact> contacts  = Arrays.asList(responseEntity.getBody());
         model.addAttribute("contacts", contacts);
 
         return "list";
@@ -74,7 +68,7 @@ public class ContactsController {
     public String displayEditContact(@RequestParam Integer contactId, Model model) {
         logger.debug("In displayEditContact");
 
-        model.addAttribute("contact", contacts.get(contactId));
+        //model.addAttribute("contact", contacts.get(contactId));
 
         return "edit";
     }
@@ -83,7 +77,7 @@ public class ContactsController {
     public String doEditContact(@RequestParam Integer contactId, @ModelAttribute Contact contact) {
         logger.debug("In doEditContact");
 
-        contacts.put(contactId, contact);
+        //contacts.put(contactId, contact);
 
         return "redirect:/contacts/view?contactId=" + contactId;
     }
@@ -92,7 +86,7 @@ public class ContactsController {
     public String displayViewContact(@RequestParam Integer contactId, Model model) {
         logger.debug("In displayViewContact");
 
-        model.addAttribute("contact", contacts.get(contactId));
+        //model.addAttribute("contact", contacts.get(contactId));
 
         return "view";
     }
@@ -101,7 +95,7 @@ public class ContactsController {
     public String doDeleteContact(@RequestParam Integer contactId) {
         logger.debug("In doDeleteContact");
 
-        contacts.remove(contactId);
+        //contacts.remove(contactId);
 
         return "redirect:/contacts/list";
     }
