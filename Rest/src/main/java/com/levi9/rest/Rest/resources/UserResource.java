@@ -49,15 +49,4 @@ public class UserResource {
 	public User deleteUser(@PathParam("userName") String userName) {
 		return service.deleteUser(userName);
 	}
-
-	@Path("/{userName}/events")
-	public EventResource handleEvents() {
-		return new EventResource();
-	}
-
-	@Path("/{userName}/contacts")
-	public ContactResource handleContacts() {
-		return new ContactResource();
-	}
-
 }

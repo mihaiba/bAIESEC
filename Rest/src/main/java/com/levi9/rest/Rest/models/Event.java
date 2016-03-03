@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 public class Event {
 	private int id;
-	private LocalDate eventDate = LocalDate.MAX;
+	private LocalDate eventDate;
 	private List<Contact> contacts = new ArrayList<>();
 
 	public Event() {

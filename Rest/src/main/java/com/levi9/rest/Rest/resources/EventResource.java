@@ -20,7 +20,7 @@ import com.levi9.rest.Rest.services.EventService;
 /**
  * Sub resource of User resource.
  */
-@Path("/{userName}/events")
+@Path("/users/{userName}/events")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class EventResource {

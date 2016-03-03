@@ -9,7 +9,7 @@ import com.levi9.rest.Rest.models.User;
 
 public class UserService {
 
-	private Map<String, User> users = Database.getUsers();
+	private static Map<String, User> users = Database.getUsers();
 
 	public UserService() {
 	}
