@@ -1,4 +1,4 @@
-package com.levi9.rest.Rest.resources.filterbeans;
+package com.levi9.rest.resources.filterbeans;
 
 import javax.ws.rs.QueryParam;
 
