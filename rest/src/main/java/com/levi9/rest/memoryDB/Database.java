@@ -52,7 +52,6 @@ public class Database {
 
 	private static void initContacts() {
 		initUsers();
-		initEvents();
 		contacts = new ConcurrentHashMap<>();
 		for (User user : users.values()) {
 			contacts.put(user.getId(), new ConcurrentHashMap<>());
@@ -68,7 +67,6 @@ public class Database {
 
 	private static void initEvents() {
 		initUsers();
-		initContacts();
 		events = new ConcurrentHashMap<>();
 		for (User user : users.values()) {
 			events.put(user.getId(), new ConcurrentHashMap<>());
