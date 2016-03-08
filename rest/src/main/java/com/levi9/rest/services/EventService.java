@@ -20,6 +20,8 @@ public class EventService {
 		long currentEventId = 0;
 		if (eventIdsByUser.containsKey(userId)) {
 			currentEventId = eventIdsByUser.get(userId);
+		} else {
+			currentEventId = eventIdsByUser.size();
 		}
 		eventIdsByUser.put(userId, ++currentEventId);
 		event.setId(currentEventId);
@@ -38,7 +40,7 @@ public class EventService {
 	}
 
 	public Event remove(Long userId, Long eventId) {
-		return events.get(userId).remove(eventId); 
+		return events.get(userId).remove(eventId);
 	}
 
 }

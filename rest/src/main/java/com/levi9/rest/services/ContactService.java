@@ -20,6 +20,8 @@ public class ContactService {
 		long currentContactId = 0;
 		if (contactIdsByUser.containsKey(userId)) {
 			currentContactId = contactIdsByUser.get(userId);
+		} else {
+			currentContactId = contactIdsByUser.size();
 		}
 		contactIdsByUser.put(userId, ++currentContactId);
 		contact.setId(currentContactId);
