@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="contacts" scope="request" type="java.util.HashMap<java.lang.Integer, com.levi9.baisec.web.controllers.Contact>"/>
+<jsp:useBean id="contacts" scope="request" type="java.util.HashMap<java.lang.Integer, com.levi9.baisec.web.controllers.models.Contact>"/>
 
 <html>
 <head>

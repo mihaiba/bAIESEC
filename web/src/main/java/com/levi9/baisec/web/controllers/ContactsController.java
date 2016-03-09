@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+
+import static java.util.stream.Collectors.toMap;
 
 /**
  * File created by a.chmilevski on 2/24/2016 - 10:37 AM.
@@ -40,12 +44,15 @@ public class ContactsController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String displayContactList(Model model) {
+    public String displayContactList(Principal principal, Model model) {
         logger.debug("In displayContactList");
 
-        ResponseEntity<Contact[]> responseEntity = restTemplate.getForEntity(restUrl + "/users/a.chmilevski/contacts", Contact[].class);
+        ResponseEntity<Contact[]> responseEntity = restTemplate.getForEntity(restUrl + "/users/" + principal.getName() + "/contacts", Contact[].class);
         List<Contact> contacts  = Arrays.asList(responseEntity.getBody());
-        model.addAttribute("contacts", contacts);
+
+
+
+        model.addAttribute("contacts", contacts.stream().collect(toMap(Contact::getId, Function.<Contact>identity())));
 
         return "list";
     }
