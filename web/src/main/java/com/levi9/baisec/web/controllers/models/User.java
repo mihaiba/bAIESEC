@@ -1,38 +1,26 @@
 package com.levi9.baisec.web.controllers.models;
 
 import javax.xml.bind.annotation.XmlTransient;
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class User {
-	private int id;
 	private String username;
 	private String password;
 	private String firstName;
 	private String lastName;
-	private Map<String, Contact> contacts = new ConcurrentHashMap<>();
-	private Map<LocalDate, Event> events = new ConcurrentHashMap<>();
-	private boolean isAuthenticated = false;
+	private Map<Long, Contact> contacts = new ConcurrentHashMap<>();
+	private Map<Long, Event> events = new ConcurrentHashMap<>();
 
 	public User() {
 
 	}
 
-	public User(int id, String username, String password, String firstName, String lastName) {
-		this.id = id;
+	public User(String username, String password, String firstName, String lastName) {
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
@@ -68,28 +56,20 @@ public class User {
 	}
 
 	@XmlTransient
-	public Map<String, Contact> getContacts() {
+	public Map<Long, Contact> getContacts() {
 		return contacts;
 	}
 
-	public void setContacts(Map<String, Contact> contacts) {
+	public void setContacts(Map<Long, Contact> contacts) {
 		this.contacts = contacts;
 	}
 
 	@XmlTransient
-	public Map<LocalDate, Event> getEvents() {
+	public Map<Long, Event> getEvents() {
 		return events;
 	}
 
-	public void setEvents(Map<LocalDate, Event> events) {
+	public void setEvents(Map<Long, Event> events) {
 		this.events = events;
-	}
-
-	public boolean isAuthenticated() {
-		return isAuthenticated;
-	}
-
-	public void setAuthenticated(boolean isAuthenticated) {
-		this.isAuthenticated = isAuthenticated;
 	}
 }

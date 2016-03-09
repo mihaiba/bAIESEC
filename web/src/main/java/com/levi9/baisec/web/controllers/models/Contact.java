@@ -1,19 +1,17 @@
 package com.levi9.baisec.web.controllers.models;
 
-import java.time.LocalDate;
-
 public class Contact {
-	private int id;
+	private Long id;
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
-	private LocalDate birthDay;
+	private String birthDay;
 
 	public Contact() {
 
 	}
 
-	public Contact(int id, String firstName, String lastName, String phoneNumber, LocalDate birthday) {
+	public Contact(Long id, String firstName, String lastName, String phoneNumber, String birthday) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -21,11 +19,11 @@ public class Contact {
 		this.birthDay = birthday;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -53,11 +51,11 @@ public class Contact {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public LocalDate getBirthDay() {
+	public String getBirthDay() {
 		return birthDay;
 	}
 
-	public void setBirthDay(LocalDate birthDay) {
+	public void setBirthDay(String birthDay) {
 		this.birthDay = birthDay;
 	}
 }
