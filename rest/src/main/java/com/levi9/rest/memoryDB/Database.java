@@ -28,7 +28,7 @@ public class Database {
 		u.setFirstName("Albert");
 		u.setLastName("Chmilevski");
 		u.setPassword("A|Es3C");
-		u.setUsername("albert");
+		u.setUsername("a.chmilevski");
 		users.put(u.getUsername(), u);
 
 		u = new User();
@@ -37,7 +37,7 @@ public class Database {
 		u.setFirstName("Mihai");
 		u.setLastName("Balaniscu");
 		u.setPassword("Ai3Sec");
-		u.setUsername("albert");
+		u.setUsername("m.balaniscu");
 		users.put(u.getUsername(), u);
 	}
 
