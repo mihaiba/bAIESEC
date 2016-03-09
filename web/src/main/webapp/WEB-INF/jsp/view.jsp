@@ -8,12 +8,11 @@
 <body>
 <h1>View Contact</h1>
 
-<h2><c:out value="${contact.name}"/></h2>
+<h2>${contact.firstName} ${contact.lastName}</h2>
 
-<p>Phone Number: ${contact.phone}</p>
+<p>Phone Number: ${contact.phoneNumber}</p>
 
-<p>Address: ${contact.address}</p>
-
-<p>Date of Birth: ${contact.dateOfBirth}</p>
+<p>Date of Birth: ${contact.birthDay}</p>
+<p><a href="<c:url value="/contacts/list"/>">Go to list</a></p>
 </body>
 </html>

@@ -22,88 +22,89 @@ import java.util.function.Function;
 import static java.util.stream.Collectors.toMap;
 
 /**
- * File created by a.chmilevski on 2/24/2016 - 10:37 AM.
- * RadiON
+ * File created by a.chmilevski on 2/24/2016 - 10:37 AM. RadiON
  */
 @Controller
 @RequestMapping(value = "/contacts")
 public class ContactsController {
-    private static final Logger logger = LoggerFactory.getLogger(ContactsController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ContactsController.class);
 
-    @Autowired
-    RestTemplate restTemplate;
+	@Autowired
+	RestTemplate restTemplate;
 
-    @Value("${rest.url}")
-    String restUrl;
+	@Value("${rest.url}")
+	String restUrl;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String index() {
-        logger.debug("In index");
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public String index() {
+		logger.debug("In index");
 
-        return "redirect:/contacts/list";
-    }
+		return "redirect:/contacts/list";
+	}
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String displayContactList(Principal principal, Model model) {
-        logger.debug("In displayContactList");
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String displayContactList(Principal principal, Model model) {
+		logger.debug("In displayContactList");
 
-        ResponseEntity<Contact[]> responseEntity = restTemplate.getForEntity(restUrl + "/users/" + principal.getName() + "/contacts", Contact[].class);
-        List<Contact> contacts  = Arrays.asList(responseEntity.getBody());
+		ResponseEntity<Contact[]> responseEntity = restTemplate
+				.getForEntity(restUrl + "/users/" + principal.getName() + "/contacts", Contact[].class);
+		List<Contact> contacts = Arrays.asList(responseEntity.getBody());
 
+		model.addAttribute("contacts", contacts.stream().collect(toMap(Contact::getId, Function.<Contact> identity())));
 
+		return "list";
+	}
 
-        model.addAttribute("contacts", contacts.stream().collect(toMap(Contact::getId, Function.<Contact>identity())));
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public String displayCreateContact(Model model) {
+		logger.debug("In displayCreateContact");
+		model.addAttribute("contact", new Contact());
+		model.addAttribute("mode", "add");
+		return "edit";
+	}
 
-        return "list";
-    }
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String doCreateContact(@ModelAttribute Contact contact, Principal principal) {
+		logger.debug("In doCreateContact");
 
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String displayCreateContact() {
-        logger.debug("In displayCreateContact");
+		return "redirect:/contacts/view?contactId=4";
+	}
 
-        return "edit";
-    }
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public String displayEditContact(@RequestParam Integer contactId, Model model, Principal principal) {
+		logger.debug("In displayEditContact");
+		ResponseEntity<Contact> responseEntity = restTemplate
+				.getForEntity(restUrl + "/users/" + principal.getName() + "/contacts/" + contactId, Contact.class);
+		model.addAttribute("contact", responseEntity.getBody());
+		model.addAttribute("mode", "update");
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String doCreateContact() {
-        logger.debug("In doCreateContact");
+		return "edit";
+	}
 
-        return "redirect:/contacts/view?contactId=4";
-    }
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public String doEditContact(@RequestParam Integer contactId, @ModelAttribute Contact contact, Principal principal) {
+		logger.debug("In doEditContact");
+		restTemplate.put(restUrl + "/users/" + principal.getName() + "/contacts/" + contactId, contact);
+		return "redirect:/contacts/view?contactId=" + contactId;
+	}
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String displayEditContact(@RequestParam Integer contactId, Model model) {
-        logger.debug("In displayEditContact");
+	@RequestMapping(value = "/view", method = RequestMethod.GET)
+	public String displayViewContact(@RequestParam Integer contactId, Model model, Principal principal) {
+		logger.debug("In displayViewContact");
 
-        //model.addAttribute("contact", contacts.get(contactId));
+		ResponseEntity<Contact> responseEntity = restTemplate
+				.getForEntity(restUrl + "/users/" + principal.getName() + "/contacts/" + contactId, Contact.class);
+		model.addAttribute("contact", responseEntity.getBody());
 
-        return "edit";
-    }
+		return "view";
+	}
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String doEditContact(@RequestParam Integer contactId, @ModelAttribute Contact contact) {
-        logger.debug("In doEditContact");
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public String doDeleteContact(@RequestParam Integer contactId) {
+		logger.debug("In doDeleteContact");
 
-        //contacts.put(contactId, contact);
+		// contacts.remove(contactId);
 
-        return "redirect:/contacts/view?contactId=" + contactId;
-    }
-
-    @RequestMapping(value = "/view", method = RequestMethod.GET)
-    public String displayViewContact(@RequestParam Integer contactId, Model model) {
-        logger.debug("In displayViewContact");
-
-        //model.addAttribute("contact", contacts.get(contactId));
-
-        return "view";
-    }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String doDeleteContact(@RequestParam Integer contactId) {
-        logger.debug("In doDeleteContact");
-
-        //contacts.remove(contactId);
-
-        return "redirect:/contacts/list";
-    }
+		return "redirect:/contacts/list";
+	}
 }
