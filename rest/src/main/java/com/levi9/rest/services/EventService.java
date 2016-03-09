@@ -11,36 +11,36 @@ import com.levi9.rest.resources.filterbeans.EventsFilterBean;
 
 public class EventService {
 
-	public static Map<Long, Long> eventIdsByUser = new HashMap<>();
+	public static Map<String, Long> eventIdsByUser = new HashMap<>();
 
-	private static Map<Long, Map<Long, Event>> events = Database.getEvents();
+	private static Map<String, Map<Long, Event>> events = Database.getEvents();
 
-	public Event add(Long userId, Event event) {
-		Map<Long, Event> currentUserEvents = events.get(userId);
+	public Event add(String userName, Event event) {
+		Map<Long, Event> currentUserEvents = events.get(userName);
 		long currentEventId = 0;
-		if (eventIdsByUser.containsKey(userId)) {
-			currentEventId = eventIdsByUser.get(userId);
+		if (eventIdsByUser.containsKey(userName)) {
+			currentEventId = eventIdsByUser.get(userName);
 		} else {
 			currentEventId = eventIdsByUser.size();
 		}
-		eventIdsByUser.put(userId, ++currentEventId);
+		eventIdsByUser.put(userName, ++currentEventId);
 		event.setId(currentEventId);
 		currentUserEvents.put(event.getId(), event);
 		return event;
 	}
 
-	public List<Event> getAll(Long userId, EventsFilterBean filter) {
-		Map<Long, Event> currentUserEvents = events.get(userId);
+	public List<Event> getAll(String userName, EventsFilterBean filter) {
+		Map<Long, Event> currentUserEvents = events.get(userName);
 		return new ArrayList<>(currentUserEvents.values());
 	}
 
-	public Event update(Long userId, Event event) {
-		events.get(userId).put(event.getId(), event);
+	public Event update(String userName, Event event) {
+		events.get(userName).put(event.getId(), event);
 		return event;
 	}
 
-	public Event remove(Long userId, Long eventId) {
-		return events.get(userId).remove(eventId);
+	public Event remove(String userName, Long eventId) {
+		return events.get(userName).remove(eventId);
 	}
 
 }

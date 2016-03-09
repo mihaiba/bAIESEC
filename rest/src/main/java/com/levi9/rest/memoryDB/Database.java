@@ -9,11 +9,11 @@ import com.levi9.rest.models.User;
 
 public class Database {
 
-	private static Map<Long, User> users;
-	private static Map<Long, Map<Long, Contact>> contacts;
-	private static Map<Long, Map<Long, Event>> events;
+	private static Map<String, User> users;
+	private static Map<String, Map<Long, Contact>> contacts;
+	private static Map<String, Map<Long, Event>> events;
 
-	public static Map<Long, User> getUsers() {
+	public static Map<String, User> getUsers() {
 		if (users == null) {
 			initUsers();
 		}
@@ -23,27 +23,25 @@ public class Database {
 	private static void initUsers() {
 		users = new ConcurrentHashMap<>();
 		User u = new User();
-		u.setId(1L);
 		u.setContacts(new ConcurrentHashMap<>());
 		u.setEvents(new ConcurrentHashMap<>());
 		u.setFirstName("Albert");
 		u.setLastName("Chmilevski");
 		u.setPassword("A|Es3C");
 		u.setUsername("albert");
-		users.put(u.getId(), u);
+		users.put(u.getUsername(), u);
 
 		u = new User();
-		u.setId(2L);
 		u.setContacts(new ConcurrentHashMap<>());
 		u.setEvents(new ConcurrentHashMap<>());
 		u.setFirstName("Mihai");
 		u.setLastName("Balaniscu");
 		u.setPassword("Ai3Sec");
 		u.setUsername("albert");
-		users.put(u.getId(), u);
+		users.put(u.getUsername(), u);
 	}
 
-	public static Map<Long, Map<Long, Contact>> getContacts() {
+	public static Map<String, Map<Long, Contact>> getContacts() {
 		if (contacts == null) {
 			initContacts();
 		}
@@ -54,11 +52,11 @@ public class Database {
 		initUsers();
 		contacts = new ConcurrentHashMap<>();
 		for (User user : users.values()) {
-			contacts.put(user.getId(), new ConcurrentHashMap<>());
+			contacts.put(user.getUsername(), new ConcurrentHashMap<>());
 		}
 	}
 
-	public static Map<Long, Map<Long, Event>> getEvents() {
+	public static Map<String, Map<Long, Event>> getEvents() {
 		if (events == null) {
 			initEvents();
 		}
@@ -69,7 +67,7 @@ public class Database {
 		initUsers();
 		events = new ConcurrentHashMap<>();
 		for (User user : users.values()) {
-			events.put(user.getId(), new ConcurrentHashMap<>());
+			events.put(user.getUsername(), new ConcurrentHashMap<>());
 		}
 	}
 

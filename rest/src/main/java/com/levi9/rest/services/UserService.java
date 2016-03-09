@@ -9,19 +9,16 @@ import com.levi9.rest.models.User;
 
 public class UserService {
 
-	private static Long currentUserId = 0L;
-
-	private static Map<Long, User> users = Database.getUsers();
+	private static Map<String, User> users = Database.getUsers();
 
 	public UserService() {
 	}
 
 	public User add(User user) {
-		if (users.containsKey(currentUserId)) {
-			currentUserId = (long) (users.size() + 1);
+		if (users.containsKey(user.getUsername())) {
+			// TODO: return exception user already exists ???
 		}
-		user.setId(currentUserId);
-		users.put(user.getId(), user);
+		users.put(user.getUsername(), user);
 		return user;
 	}
 
@@ -29,17 +26,17 @@ public class UserService {
 		return new ArrayList<>(users.values());
 	}
 
-	public User get(Long userId) {
-		return users.get(userId);
+	public User get(String userName) {
+		return users.get(userName);
 	}
 
 	public User update(User user) {
-		users.put(user.getId(), user);
+		users.put(user.getUsername(), user);
 		return user;
 	}
 
-	public User remove(Long userId) {
-		return users.remove(userId);
+	public User remove(String userName) {
+		return users.remove(userName);
 	}
 
 }

@@ -11,26 +11,26 @@ import com.levi9.rest.resources.filterbeans.ContactsFilterBean;
 
 public class ContactService {
 
-	private static Map<Long, Long> contactIdsByUser = new HashMap<>();
+	private static Map<String, Long> contactIdsByUser = new HashMap<>();
 
-	private Map<Long, Map<Long, Contact>> contacts = Database.getContacts();
+	private Map<String, Map<Long, Contact>> contacts = Database.getContacts();
 
-	public Contact add(Long userId, Contact contact) {
-		Map<Long, Contact> currentUserContacts = contacts.get(userId);
+	public Contact add(String userName, Contact contact) {
+		Map<Long, Contact> currentUserContacts = contacts.get(userName);
 		long currentContactId = 0;
-		if (contactIdsByUser.containsKey(userId)) {
-			currentContactId = contactIdsByUser.get(userId);
+		if (contactIdsByUser.containsKey(userName)) {
+			currentContactId = contactIdsByUser.get(userName);
 		} else {
 			currentContactId = contactIdsByUser.size();
 		}
-		contactIdsByUser.put(userId, ++currentContactId);
+		contactIdsByUser.put(userName, ++currentContactId);
 		contact.setId(currentContactId);
 		currentUserContacts.put(contact.getId(), contact);
 		return contact;
 	}
 
-	public List<Contact> getAll(Long userId, ContactsFilterBean filter) {
-		Map<Long, Contact> contactMap = contacts.get(userId);
+	public List<Contact> getAll(String userName, ContactsFilterBean filter) {
+		Map<Long, Contact> contactMap = contacts.get(userName);
 		if (filter.getName() != null && !filter.getName().isEmpty()) {
 			return getContactsByName(filter.getName(), contactMap);
 		}
@@ -40,8 +40,8 @@ public class ContactService {
 		return new ArrayList<>(contactMap.values());
 	}
 
-	public Contact get(Long userId, Long contactId) {
-		return contacts.get(userId).get(contactId);
+	public Contact get(String userName, Long contactId) {
+		return contacts.get(userName).get(contactId);
 	}
 
 	private List<Contact> getContactsByName(String name, Map<Long, Contact> contactMap) {
@@ -65,8 +65,8 @@ public class ContactService {
 		return filteredContacts;
 	}
 
-	public Contact update(Long userId, Contact contact) {
-		Map<Long, Contact> contactMap = contacts.get(userId);
+	public Contact update(String userName, Contact contact) {
+		Map<Long, Contact> contactMap = contacts.get(userName);
 		if (!contactMap.containsKey(contact.getId())) {
 			return null;
 		}
@@ -74,7 +74,7 @@ public class ContactService {
 		return contact;
 	}
 
-	public Contact removeContact(Long userId, Long contactId) {
-		return contacts.get(userId).remove(contactId);
+	public Contact removeContact(String userName, Long contactId) {
+		return contacts.get(userName).remove(contactId);
 	}
 }

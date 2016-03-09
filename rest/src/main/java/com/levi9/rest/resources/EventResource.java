@@ -20,32 +20,32 @@ import com.levi9.rest.services.EventService;
 /**
  * Sub resource of User resource.
  */
-@Path("/users/{userId}/events")
+@Path("/users/{userName}/events")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class EventResource {
 	private static EventService eventService = new EventService();
 
 	@POST
-	public Event createEvent(@PathParam("userId") Long userId, Event event) {
-		return eventService.add(userId, event);
+	public Event createEvent(@PathParam("userName") String userName, Event event) {
+		return eventService.add(userName, event);
 	}
 
 	@GET
-	public List<Event> getEvents(@PathParam("userId") Long userId, @BeanParam EventsFilterBean filter) {
-		return eventService.getAll(userId, filter);
+	public List<Event> getEvents(@PathParam("userName") String userName, @BeanParam EventsFilterBean filter) {
+		return eventService.getAll(userName, filter);
 	}
 
 	@PUT
 	@Path("{eventId}")
-	public Event updateEvent(@PathParam("userId") Long userId, @PathParam("eventId") Long eventId, Event event) {
+	public Event updateEvent(@PathParam("userName") String userName, @PathParam("eventId") Long eventId, Event event) {
 		event.setId(eventId);
-		return eventService.update(userId, event);
+		return eventService.update(userName, event);
 	}
 
 	@DELETE
 	@Path("{eventId}")
-	public Event deleteEvent(@PathParam("userId") Long userId, @PathParam("eventId") Long eventId) {
-		return eventService.remove(userId, eventId);
+	public Event deleteEvent(@PathParam("userId") String userName, @PathParam("eventId") Long eventId) {
+		return eventService.remove(userName, eventId);
 	}
 }

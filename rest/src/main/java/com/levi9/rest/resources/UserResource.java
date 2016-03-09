@@ -33,21 +33,21 @@ public class UserResource {
 	}
 
 	@GET
-	@Path("/{userId}")
-	public User getUser(@PathParam("userId") Long userId) {
-		return userService.get(userId);
+	@Path("/{userName}")
+	public User getUser(@PathParam("userName") String userName) {
+		return userService.get(userName);
 	}
 
 	@PUT
-	@Path("/{userId}")
-	public User updateUser(@PathParam("userId") Long userId, User user) {
-		user.setId(userId);
+	@Path("/{userName}")
+	public User updateUser(@PathParam("userName") String userName, User user) {
+		user.setUsername(userName);
 		return userService.update(user);
 	}
 
 	@DELETE
-	@Path("/{userId}")
-	public User deleteUser(@PathParam("userId") Long userId) {
-		return userService.remove(userId);
+	@Path("/{userName}")
+	public User deleteUser(@PathParam("userName") String userName) {
+		return userService.remove(userName);
 	}
 }

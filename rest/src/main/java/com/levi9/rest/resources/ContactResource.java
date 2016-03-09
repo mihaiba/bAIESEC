@@ -17,7 +17,7 @@ import com.levi9.rest.models.Contact;
 import com.levi9.rest.resources.filterbeans.ContactsFilterBean;
 import com.levi9.rest.services.ContactService;
 
-@Path("/users/{userId}/contacts")
+@Path("/users/{userName}/contacts")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ContactResource {
@@ -25,32 +25,32 @@ public class ContactResource {
 	private static ContactService contactService = new ContactService();
 
 	@POST
-	public Contact createContact(@PathParam("userId") Long userId, Contact contact) {
-		return contactService.add(userId, contact);
+	public Contact createContact(@PathParam("userName") String userName, Contact contact) {
+		return contactService.add(userName, contact);
 	}
 
 	@GET
-	public List<Contact> getContacts(@PathParam("userId") Long userId, @BeanParam ContactsFilterBean filter) {
-		return contactService.getAll(userId, filter);
+	public List<Contact> getContacts(@PathParam("userName") String userName, @BeanParam ContactsFilterBean filter) {
+		return contactService.getAll(userName, filter);
 	}
 
 	@GET
 	@Path("/{contactId}")
-	public Contact getContact(@PathParam("userId") Long userId, @PathParam("contactId") Long contactId) {
-		return contactService.get(userId, contactId);
+	public Contact getContact(@PathParam("userName") String userName, @PathParam("contactId") Long contactId) {
+		return contactService.get(userName, contactId);
 	}
 
 	@PUT
 	@Path("/{contactId}")
-	public Contact updateContact(@PathParam("userId") Long userId, @PathParam("contactId") Long contactId,
+	public Contact updateContact(@PathParam("userName") String userName, @PathParam("contactId") Long contactId,
 			Contact contact) {
 		contact.setId(contactId);
-		return contactService.update(userId, contact);
+		return contactService.update(userName, contact);
 	}
 
 	@DELETE
 	@Path("/{contactId}")
-	public Contact deleteContact(@PathParam("userId") Long userId, @PathParam("contactId") Long contactId) {
-		return contactService.removeContact(userId, contactId);
+	public Contact deleteContact(@PathParam("userName") String userName, @PathParam("contactId") Long contactId) {
+		return contactService.removeContact(userName, contactId);
 	}
 }

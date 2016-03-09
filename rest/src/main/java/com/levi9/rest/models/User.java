@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.bind.annotation.XmlTransient;
 
 public class User {
-	private Long id;
 	private String username;
 	private String password;
 	private String firstName;
@@ -18,20 +17,11 @@ public class User {
 
 	}
 
-	public User(Long id, String username, String password, String firstName, String lastName) {
-		this.id = id;
+	public User(String username, String password, String firstName, String lastName) {
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
