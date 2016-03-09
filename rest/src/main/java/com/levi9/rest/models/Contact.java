@@ -11,12 +11,12 @@ public class Contact {
 
 	}
 
-	public Contact(Long id, String firstName, String lastName, String phoneNumber, String birthday) {
+	public Contact(Long id, String firstName, String lastName, String phoneNumber, String birthDay) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
-		this.birthDay = birthday;
+		this.birthDay = birthDay;
 	}
 
 	public Long getId() {
