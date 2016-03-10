@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id="contacts" scope="request"
-	type="java.util.Map<java.lang.Integer, com.levi9.baisec.web.controllers.model.Contact"/>
+	type="java.util.Map<java.lang.Integer, com.levi9.baisec.web.controllers.models.Contact>"/>
 
 <html>
 <head>
