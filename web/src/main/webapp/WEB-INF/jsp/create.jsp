@@ -2,17 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<c:choose>
-	<c:when test="${mode == 'edit'}">
-		<title>Edit Contact</title>
-	</c:when>
-	<c:otherwise>
-		<title>Add Contact</title>
-	</c:otherwise>
-</c:choose>
+<title>Create Contact</title>
 </head>
 <body>
-	<h1>Edit Contact</h1>
+	<h1>Create Contact</h1>
 	<table border="1">
 		<form:form commandName="contact">
 			<tbody>
@@ -33,7 +26,7 @@
 					<td><form:input path="birthDay" /></td>
 				</tr>
 				<tr>
-					<td><input type="submit" value="Update" /></td>
+					<td><input type="submit" value="Create" /></td>
 				</tr>
 			</tbody>
 		</form:form>

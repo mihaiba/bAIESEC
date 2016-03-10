@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:useBean id="contacts" scope="request"
-	type="java.util.Map<java.lang.Integer,
-	com.levi9.baisec.web.controllers.models.Contact>"/>
+	type="java.util.Map<java.lang.Integer, com.levi9.baisec.web.controllers.model.Contact"/>
 
 <html>
 <head>
@@ -9,10 +8,14 @@
 </head>
 <body>
 	<h1>List Contacts</h1>
+	<p>
+		<a href="<c:url value="/contacts/create"/>">Create new contact</a>
+	</p>
 	<table border="1">
 		<thead>
 			<tr>
-				<td>Name</td>
+				<td>First Name</td>
+				<td>Last Name</td>
 				<td>Phone Number</td>
 				<td>Actions</td>
 			</tr>
@@ -21,7 +24,8 @@
 
 			<c:forEach var="contact" items="${contacts}">
 				<tr>
-					<td>${contact.value.firstName}${contact.value.lastName}</td>
+					<td>${contact.value.firstName}</td>
+					<td>${contact.value.lastName}</td>
 					<td>${contact.value.phoneNumber}</td>
 					<td><a
 						href="<c:url value="/contacts/view?contactId=${contact.key}"/>">View</a>
@@ -33,10 +37,8 @@
 						</form></td>
 				</tr>
 			</c:forEach>
-			<p>
-				<a href="<c:url value="/contacts/create"/>"> Create new contact</a>
-			</p>
 		</tbody>
 	</table>
+
 </body>
-	</html>
+</html>

@@ -1,6 +1,14 @@
 package com.levi9.baisec.web.controllers;
 
-import com.levi9.baisec.web.controllers.models.Contact;
+import static java.util.stream.Collectors.toMap;
+
+import java.security.Principal;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-import java.security.Principal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
-
-import static java.util.stream.Collectors.toMap;
+import com.levi9.baisec.web.controllers.models.Contact;
 
 /**
  * File created by a.chmilevski on 2/24/2016 - 10:37 AM. RadiON
@@ -59,15 +62,16 @@ public class ContactsController {
 	public String displayCreateContact(Model model) {
 		logger.debug("In displayCreateContact");
 		model.addAttribute("contact", new Contact());
-		model.addAttribute("mode", "add");
-		return "edit";
+		return "create";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String doCreateContact(@ModelAttribute Contact contact, Principal principal) {
 		logger.debug("In doCreateContact");
+		ResponseEntity<Contact> responseEntity = restTemplate
+				.postForEntity(restUrl + "/users/" + principal.getName() + "/contacts", contact, Contact.class);
 
-		return "redirect:/contacts/view?contactId=4";
+		return "redirect:/contacts/view?contactId=" + responseEntity.getBody().getId();
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -76,7 +80,6 @@ public class ContactsController {
 		ResponseEntity<Contact> responseEntity = restTemplate
 				.getForEntity(restUrl + "/users/" + principal.getName() + "/contacts/" + contactId, Contact.class);
 		model.addAttribute("contact", responseEntity.getBody());
-		model.addAttribute("mode", "update");
 
 		return "edit";
 	}
@@ -100,11 +103,11 @@ public class ContactsController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public String doDeleteContact(@RequestParam Integer contactId) {
+	public String doDeleteContact(@RequestParam Integer contactId, Principal principal) {
 		logger.debug("In doDeleteContact");
-
-		// contacts.remove(contactId);
-
+		Map<String, String> params = new HashMap<>();
+		params.put("contactId", contactId.toString());
+		restTemplate.delete(restUrl + "/users/" + principal.getName() + "/contacts/{contactId}", params);
 		return "redirect:/contacts/list";
 	}
 }
