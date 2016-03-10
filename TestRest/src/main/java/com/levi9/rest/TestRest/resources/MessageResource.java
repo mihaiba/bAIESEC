@@ -11,7 +11,10 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import com.levi9.rest.TestRest.model.Message;
 import com.levi9.rest.TestRest.resources.beans.MessageFilterBean;
@@ -26,13 +29,7 @@ public class MessageResource {
 
 	@GET
 	public List<Message> getMessages(@BeanParam MessageFilterBean filter) {
-		if (filter.getYear() > 0) {
-			return service.getAllMessagesForYear(filter.getYear());
-		}
-		if (filter.getStart() >= 0 && filter.getSize() >= 0) {
-			return service.getAllMessagesPaginated(filter.getStart(), filter.getSize());
-		}
-		return service.getAllMessages();
+		return service.getAllMessages(filter);
 	}
 
 	@GET
@@ -42,8 +39,10 @@ public class MessageResource {
 	}
 
 	@POST
-	public Message addMessage(Message msg) {
-		return service.addMessage(msg);
+	public Response addMessage(Message msg, @Context UriInfo uriInfo) {
+		Message newMsg = service.addMessage(msg);
+		return Response.created(uriInfo.getAbsolutePathBuilder().path(String.valueOf(newMsg.getId())).build())
+				.entity(newMsg).build();
 	}
 
 	@PUT

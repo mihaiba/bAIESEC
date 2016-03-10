@@ -4,33 +4,33 @@ import javax.ws.rs.QueryParam;
 
 public class MessageFilterBean {
 	@QueryParam("year")
-	private int year;
+	private Integer year;
 	@QueryParam("start")
-	private int start;
+	private Integer start;
 	@QueryParam("size")
-	private int size;
+	private Integer size;
 
-	public int getYear() {
+	public Integer getYear() {
 		return year;
 	}
 
-	public void setYear(int year) {
+	public void setYear(Integer year) {
 		this.year = year;
 	}
 
-	public int getStart() {
+	public Integer getStart() {
 		return start;
 	}
 
-	public void setStart(int start) {
+	public void setStart(Integer start) {
 		this.start = start;
 	}
 
-	public int getSize() {
+	public Integer getSize() {
 		return size;
 	}
 
-	public void setSize(int size) {
+	public void setSize(Integer size) {
 		this.size = size;
 	}
 }

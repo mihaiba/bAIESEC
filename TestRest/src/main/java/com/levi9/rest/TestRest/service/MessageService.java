@@ -5,9 +5,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import com.levi9.rest.TestRest.exception.DataNotFoundException;
 import com.levi9.rest.TestRest.memoryDB.Database;
 import com.levi9.rest.TestRest.model.Comment;
 import com.levi9.rest.TestRest.model.Message;
+import com.levi9.rest.TestRest.resources.beans.MessageFilterBean;
 
 public class MessageService {
 
@@ -26,11 +28,17 @@ public class MessageService {
 		}
 	}
 
-	public List<Message> getAllMessages() {
+	public List<Message> getAllMessages(MessageFilterBean filter) {
+		if (filter.getYear() != null) {
+			return getAllMessagesForYear(filter.getYear());
+		}
+		if (filter.getSize() != null && filter.getStart() != null) {
+			return getAllMessagesPaginated(filter.getStart(), filter.getSize());
+		}
 		return new ArrayList<>(messages.values());
 	}
 
-	public List<Message> getAllMessagesForYear(int year) {
+	private List<Message> getAllMessagesForYear(int year) {
 		List<Message> filteredMsgs = new ArrayList<>();
 		Calendar cal = Calendar.getInstance();
 		for (Message msg : messages.values()) {
@@ -42,13 +50,15 @@ public class MessageService {
 		return filteredMsgs;
 	}
 
-	public List<Message> getAllMessagesPaginated(int start, int size) {
+	private List<Message> getAllMessagesPaginated(int start, int size) {
 		List<Message> list = new ArrayList<Message>(messages.values());
-		if (start + size > list.size()) return new ArrayList<Message>();
-		return list.subList(start, start + size); 
+		return list.subList(start, start + size > list.size() ? list.size() : start + size);
 	}
 
 	public Message getMessage(long id) {
+		if (!messages.containsKey(id)) {
+			throw new DataNotFoundException("Message with id: " + id + " not found.");
+		}
 		return messages.get(id);
 	}
 
