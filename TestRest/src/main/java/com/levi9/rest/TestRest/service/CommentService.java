@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import com.levi9.rest.TestRest.memoryDB.Database;
 import com.levi9.rest.TestRest.model.Comment;
+import com.levi9.rest.TestRest.model.ErrorMessage;
 import com.levi9.rest.TestRest.model.Message;
 
 public class CommentService {
@@ -18,8 +23,18 @@ public class CommentService {
 	}
 
 	public Comment getComment(long messageId, long commentId) {
-		Map<Long, Comment> comments = messages.get(messageId).getComments();
-		return comments.get(commentId);
+		ErrorMessage errorMsg = new ErrorMessage("Not found", Status.NOT_FOUND.getStatusCode(), "http://www.google.ro");
+		Response response = Response.status(Status.NOT_FOUND).entity(errorMsg).build();
+		Message msg = messages.get(messageId);
+		if (msg == null) {
+			throw new NotFoundException(response);
+		}
+		Map<Long, Comment> comments = msg.getComments();
+		Comment comment = comments.get(commentId);
+		if (comment == null) {
+			throw new NotFoundException(response);
+		}
+		return comment;
 	}
 
 	public Comment addComment(long messageId, Comment comment) {
