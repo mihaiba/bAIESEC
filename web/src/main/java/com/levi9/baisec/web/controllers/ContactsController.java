@@ -51,6 +51,7 @@ public class ContactsController {
 
 		ResponseEntity<Contact[]> responseEntity = restTemplate
 				.getForEntity(restUrl + "/users/" + principal.getName() + "/contacts", Contact[].class);
+		
 		List<Contact> contacts = Arrays.asList(responseEntity.getBody());
 
 		model.addAttribute("contacts", contacts.stream().collect(toMap(Contact::getId, Function.<Contact> identity())));
@@ -106,8 +107,10 @@ public class ContactsController {
 	public String doDeleteContact(@RequestParam Integer contactId, Principal principal) {
 		logger.debug("In doDeleteContact");
 		Map<String, String> params = new HashMap<>();
+		params.put("restUrl", restUrl);
+		params.put("username", principal.getName());
 		params.put("contactId", contactId.toString());
-		restTemplate.delete(restUrl + "/users/" + principal.getName() + "/contacts/{contactId}", params);
+		restTemplate.delete("{restUrl}/users/{username}/contacts/{contactId}", params);
 		return "redirect:/contacts/list";
 	}
 }
